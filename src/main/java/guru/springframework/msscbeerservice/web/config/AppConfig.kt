@@ -6,6 +6,6 @@ import org.springframework.context.annotation.Configuration
 abstract class AppConfig {
     companion object {
         const val MOCK_HOST_PORT = "http://localhost:8080"
-        const val API_BEER_V1_PATH = "api/v1/beer"
+        const val API_BEER_V1_PATH = "/api/v1/beer"
     }
 }
