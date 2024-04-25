@@ -10,9 +10,9 @@
     </parent>
 
     <groupId>guru.springframework</groupId>
-    <artifactId>mssc-beer-service</artifactId>
+    <artifactId>mssc-beerDto-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>mssc-beer-service</name>
+    <name>mssc-beerDto-service</name>
     <description>MSSC Beer Service</description>
 
     <properties>

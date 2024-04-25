@@ -1,7 +1,7 @@
 package guru.springframework.msscbeerservice.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import guru.springframework.msscbeerservice.web.model.Beer;
+import guru.springframework.msscbeerservice.web.model.BeerDto;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BeerController.class)
-public class BeerControllerTest {
+public class BeerDtoControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -42,8 +42,8 @@ public class BeerControllerTest {
     @Test
     @SneakyThrows
     void saveNewBeer() {
-        Beer beer = Beer.builder().build();
-        String json = mapper.writeValueAsString(beer);
+        BeerDto beerDto = BeerDto.builder().build();
+        String json = mapper.writeValueAsString(beerDto);
 
         performAndExpect(
                 post(API_BEER_V1_PATH).contentType(APPLICATION_JSON).content(json),
@@ -54,8 +54,8 @@ public class BeerControllerTest {
     @Test
     @SneakyThrows
     void updateBeerById() {
-        Beer beer = Beer.builder().build();
-        String json = mapper.writeValueAsString(beer);
+        BeerDto beerDto = BeerDto.builder().build();
+        String json = mapper.writeValueAsString(beerDto);
 
         performAndExpect(
                 put(API_BEER_V1_PATH + "/" + UUID.randomUUID()).contentType(APPLICATION_JSON).content(json),
