@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.net.URI
 import java.util.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping(API_BEER_V1_PATH)
@@ -21,7 +22,7 @@ class BeerController {
     }
 
     @PostMapping
-    fun saveNewBeer(@RequestBody beerDto: BeerDto): ResponseEntity<String> {
+    fun saveNewBeer(@Valid @RequestBody beerDto: BeerDto): ResponseEntity<String> {
         // todo make a real implementation
         return ResponseEntity
             .created(URI.create("${MOCK_HOST_PORT}/${API_BEER_V1_PATH}/${UUID.randomUUID()}"))
@@ -29,7 +30,10 @@ class BeerController {
     }
 
     @PutMapping("/{beerId}")
-    fun updateBeerById(@PathVariable("beerId") beerId: UUID, @RequestBody beerDto: BeerDto): ResponseEntity<Any> {
+    fun updateBeerById(
+        @PathVariable("beerId") beerId: UUID,
+        @Valid @RequestBody beerDto: BeerDto
+    ): ResponseEntity<Any> {
         // todo make a real implementation
         return ResponseEntity.noContent().build()
     }
