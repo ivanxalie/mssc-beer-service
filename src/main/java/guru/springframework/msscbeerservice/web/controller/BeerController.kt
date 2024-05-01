@@ -1,5 +1,6 @@
 package guru.springframework.msscbeerservice.web.controller
 
+import guru.springframework.msscbeerservice.services.BeerService
 import guru.springframework.msscbeerservice.web.config.AppConfig.Companion.API_BEER_V1_PATH
 import guru.springframework.msscbeerservice.web.config.AppConfig.Companion.MOCK_HOST_PORT
 import guru.springframework.msscbeerservice.web.model.BeerDto
@@ -11,21 +12,20 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping(API_BEER_V1_PATH)
-class BeerController {
+class BeerController(private val beerService: BeerService) {
 
     @GetMapping("/{beerId}")
     fun getBeerById(@PathVariable("beerId") beerId: UUID): ResponseEntity<BeerDto> {
-        // todo make a real implementation
         return ResponseEntity.ok(
-            BeerDto.builder().id(beerId).build()
+            beerService.getById(beerId)
         )
     }
 
     @PostMapping
     fun saveNewBeer(@Valid @RequestBody beerDto: BeerDto): ResponseEntity<String> {
-        // todo make a real implementation
+        val saved = beerService.saveNewBeer(beerDto)
         return ResponseEntity
-            .created(URI.create("${MOCK_HOST_PORT}/${API_BEER_V1_PATH}/${UUID.randomUUID()}"))
+            .created(URI.create("${MOCK_HOST_PORT}/${API_BEER_V1_PATH}/${saved.id}"))
             .build()
     }
 
@@ -34,7 +34,7 @@ class BeerController {
         @PathVariable("beerId") beerId: UUID,
         @Valid @RequestBody beerDto: BeerDto
     ): ResponseEntity<Any> {
-        // todo make a real implementation
+        beerService.updateBeerById(beerId, beerDto)
         return ResponseEntity.noContent().build()
     }
 }
