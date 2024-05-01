@@ -36,7 +36,7 @@ public class BeerDtoControllerTest {
                 .beerName("Beer")
                 .beerStyle(BeerStyle.ALE)
                 .upc(1234567890L)
-                .price(BigDecimal.valueOf(100))
+                .price(BigDecimal.valueOf(2.99))
                 .build();
     }
 
