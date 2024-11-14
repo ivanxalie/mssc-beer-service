@@ -1,6 +1,7 @@
 package guru.springframework.msscbeerservice.services.inventory;
 
 import guru.springframework.msscbeerservice.services.inventory.model.BeerInventoryDto;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -28,15 +29,12 @@ public class BeerInventoryServiceRestTemplateImpl implements BeerInventoryServic
     public static final String INVENTORY_PATH = "/api/v1/beer/{beerId}/inventory";
     private final RestTemplate restTemplate;
 
+    @Setter
     private String beerInventoryServiceHost;
-
-    public void setBeerInventoryServiceHost(String beerInventoryServiceHost) {
-        this.beerInventoryServiceHost = beerInventoryServiceHost;
-    }
 
     public BeerInventoryServiceRestTemplateImpl(RestTemplateBuilder restTemplateBuilder,
                                                 @Value("${sfg.brewery.inventory-user}") String inventoryUser,
-                                                @Value("${sfg.brewery.inventory-password}")String inventoryPassword) {
+                                                @Value("${sfg.brewery.inventory-password}") String inventoryPassword) {
         this.restTemplate = restTemplateBuilder
                 .basicAuthentication(inventoryUser, inventoryPassword)
                 .build();
@@ -49,14 +47,14 @@ public class BeerInventoryServiceRestTemplateImpl implements BeerInventoryServic
 
         ResponseEntity<List<BeerInventoryDto>> responseEntity = restTemplate
                 .exchange(beerInventoryServiceHost + INVENTORY_PATH, HttpMethod.GET, null,
-                        new ParameterizedTypeReference<List<BeerInventoryDto>>(){}, (Object) beerId);
+                        new ParameterizedTypeReference<>() {
+                        }, beerId);
 
         //sum from inventory list
-        Integer onHand = Objects.requireNonNull(responseEntity.getBody())
+
+        return Objects.requireNonNull(responseEntity.getBody())
                 .stream()
                 .mapToInt(BeerInventoryDto::getQuantityOnHand)
                 .sum();
-
-        return onHand;
     }
 }

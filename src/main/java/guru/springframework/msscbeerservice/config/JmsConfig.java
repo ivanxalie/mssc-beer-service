@@ -10,7 +10,7 @@ import org.springframework.jms.support.converter.MessageType;
 /**
  * Created by jt on 2019-07-20.
  */
-@Configuration
+//@Configuration
 public class JmsConfig {
 
     public static final String BREWING_REQUEST_QUEUE = "brewing-request";
